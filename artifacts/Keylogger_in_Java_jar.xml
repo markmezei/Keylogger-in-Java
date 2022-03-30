@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Keylogger in Java:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Keylogger_in_Java_jar</output-path>
+    <root id="archive" name="Keylogger in Java.jar">
+      <element id="module-output" name="Keylogger in Java" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/jnativehook-2.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/slf4j-api-2.0.0-alpha7.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
